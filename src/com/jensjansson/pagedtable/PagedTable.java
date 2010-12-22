@@ -62,6 +62,7 @@ public class PagedTable extends Table {
         super(caption);
         setPageLength(25);
         addStyleName("pagedtable");
+        alwaysRecalculateColumnWidths = true;
     }
 
     public HorizontalLayout createControls() {

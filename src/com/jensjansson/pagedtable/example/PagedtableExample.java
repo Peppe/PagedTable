@@ -20,7 +20,6 @@ public class PagedtableExample extends Application {
 
     @Override
     public void init() {
-        System.out.println("New app");
         VerticalLayout mainLayout = new VerticalLayout();
         Window mainWindow = new Window("PagedTable Example", mainLayout);
         VerticalLayout tableLayout = new VerticalLayout();
@@ -42,9 +41,8 @@ public class PagedtableExample extends Application {
         pagedTable.setRowHeaderMode(Table.ROW_HEADER_MODE_ICON_ONLY);
         pagedTable.setItemIconPropertyId(FLAG);
         pagedTable.setWidth("700px");
-        pagedTable.setHeight("400px");
+        pagedTable.setPageLength(25);
         pagedTable.setImmediate(true);
-
         pagedTable.setSelectable(true);
         pagedTable.addGeneratedColumn("Generated", new ColumnGenerator() {
 
