@@ -44,6 +44,7 @@ public class PagedtableExample extends Application {
         pagedTable.setPageLength(25);
         pagedTable.setImmediate(true);
         pagedTable.setSelectable(true);
+        pagedTable.setAlwaysRecalculateColumnWidths(true);
         pagedTable.addGeneratedColumn("Generated", new ColumnGenerator() {
 
             private static final long serialVersionUID = -5042109683675242407L;

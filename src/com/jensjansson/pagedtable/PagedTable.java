@@ -46,13 +46,13 @@ public class PagedTable extends Table {
     }
 
     private static final long serialVersionUID = 6881455780158545828L;
-    // first item shown in the view for the momemnt
-    int index = 0;
-    List<PageChangeListener> listeners = null;
+    // first item shown in the view for the moment
+    private int index = 0;
+    private List<PageChangeListener> listeners = null;
 
     // Real container
-    Container.Indexed realContainer;
-    IndexedContainer shownContainer = new IndexedContainer();
+    private Container.Indexed realContainer;
+    private IndexedContainer shownContainer = new IndexedContainer();
 
     public PagedTable() {
         this(null);
@@ -62,7 +62,6 @@ public class PagedTable extends Table {
         super(caption);
         setPageLength(25);
         addStyleName("pagedtable");
-        alwaysRecalculateColumnWidths = true;
     }
 
     public HorizontalLayout createControls() {
@@ -263,6 +262,11 @@ public class PagedTable extends Table {
                     return shownContainer;
                 }
             });
+            if(alwaysRecalculateColumnWidths){
+            	for(Object columnId : shownContainer.getContainerPropertyIds()){
+            		setColumnWidth(columnId, -1);
+            	}
+            }
         }
     }
 
@@ -367,4 +371,9 @@ public class PagedTable extends Table {
         }
         setPageFirstIndex(index);
     }
+    
+    public void setAlwaysRecalculateColumnWidths(boolean alwaysRecalculateColumnWidths){
+    	this.alwaysRecalculateColumnWidths = alwaysRecalculateColumnWidths;
+    }
+    
 }
