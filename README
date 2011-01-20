@@ -1,4 +1,4 @@
-This is a Vaadin add-on component.
+This is a Vaadin add-on component. The package can be downloaded from http://vaadin.com/directory#addon/pagedtable.
 
 PagedTable is a component that behaves in the same matter as the Vaadin core Table, except that it has multiple pages instead of scrolling to show more entries. 
 
