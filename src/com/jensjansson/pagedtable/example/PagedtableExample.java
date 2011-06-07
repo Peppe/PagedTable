@@ -86,7 +86,7 @@ public class PagedtableExample extends Application {
     public static final String FLAG = "flag";
 
     private static final String[] iso3166 = new String[] { "AFGHANISTAN", "AF",
-            "ÅLAND ISLANDS", "AX", "ALBANIA", "AL", "ALGERIA", "DZ",
+            "√ÖLAND ISLANDS", "AX", "ALBANIA", "AL", "ALGERIA", "DZ",
             "AMERICAN SAMOA", "AS", "ANDORRA", "AD", "ANGOLA", "AO",
             "ANGUILLA", "AI", "ANTIGUA AND BARBUDA", "AG", "ARGENTINA", "AR",
             "ARMENIA", "AM", "ARUBA", "AW", "AUSTRALIA", "AU", "AUSTRIA", "AT",
@@ -102,7 +102,7 @@ public class PagedtableExample extends Application {
             "CHAD", "TD", "CHILE", "CL", "CHINA", "CN", "CHRISTMAS ISLAND",
             "CX", "COCOS (KEELING) ISLANDS", "CC", "COLOMBIA", "CO", "COMOROS",
             "KM", "CONGO", "CG", "CONGO, THE DEMOCRATIC REPUBLIC OF THE", "CD",
-            "COOK ISLANDS", "CK", "COSTA RICA", "CR", "CÔTE D'IVOIRE", "CI",
+            "COOK ISLANDS", "CK", "COSTA RICA", "CR", "CÔøΩTE D'IVOIRE", "CI",
             "CROATIA", "HR", "CUBA", "CU", "CYPRUS", "CY", "CZECH REPUBLIC",
             "CZ", "DENMARK", "DK", "DJIBOUTI", "DJ", "DOMINICA", "DM",
             "DOMINICAN REPUBLIC", "DO", "ECUADOR", "EC", "EGYPT", "EG",

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vaadin.data.Container;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -19,6 +17,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
 public class PagedTable extends Table {
+    private static final long serialVersionUID = 6881455780158545828L;
 
     interface PageChangeListener {
         public void pageChanged(PagedTableChangeEvent event);
@@ -45,14 +44,12 @@ public class PagedTable extends Table {
         }
     }
 
-    private static final long serialVersionUID = 6881455780158545828L;
     // first item shown in the view for the moment
     private int index = 0;
     private List<PageChangeListener> listeners = null;
 
     // Real container
     private Container.Indexed realContainer;
-    private IndexedContainer shownContainer = new IndexedContainer();
 
     public PagedTable() {
         this(null);
@@ -229,92 +226,100 @@ public class PagedTable extends Table {
         }
         Container.Indexed realContainer = (Container.Indexed) newDataSource;
         this.realContainer = realContainer;
-        shownContainer = new IndexedContainer();
-        for (Object object : realContainer.getContainerPropertyIds()) {
-            shownContainer.addContainerProperty(object,
-                    realContainer.getType(object), null);
-        }
-        fillVisibleContainer(0);
-        super.setContainerDataSource(shownContainer);
+        PagedTableContainer pagedTableContainer = new PagedTableContainer(
+                realContainer);
+        super.setContainerDataSource(pagedTableContainer);
     }
 
-    private void setPageFirstIndex(int firstIndex) {
-        if (realContainer != null) {
-            if (firstIndex <= 0) {
-                firstIndex = 0;
-            }
-            if (firstIndex > realContainer.size() - 1) {
-                int size = realContainer.size() - 1;
-                int pages = 0;
-                if (getPageLength() != 0) {
-                    pages = (int) Math.floor(0.0 + size / getPageLength());
-                }
-                firstIndex = pages * getPageLength();
-            }
-            shownContainer
-                    .removeListener((Container.ItemSetChangeListener) this);
-            fillVisibleContainer(firstIndex);
-            shownContainer.addListener((Container.ItemSetChangeListener) this);
-            containerItemSetChange(new Container.ItemSetChangeEvent() {
-                private static final long serialVersionUID = -5083660879306951876L;
+    // TODO
+    // private void setPageFirstIndex(int firstIndex) {
+    // if (realContainer != null) {
+    // if (firstIndex <= 0) {
+    // firstIndex = 0;
+    // }
+    // if (firstIndex > realContainer.size() - 1) {
+    // int size = realContainer.size() - 1;
+    // int pages = 0;
+    // if (getPageLength() != 0) {
+    // pages = (int) Math.floor(0.0 + size / getPageLength());
+    // }
+    // firstIndex = pages * getPageLength();
+    // }
+    // shownContainer
+    // .removeListener((Container.ItemSetChangeListener) this);
+    // fillVisibleContainer(firstIndex);
+    // shownContainer.addListener((Container.ItemSetChangeListener) this);
+    // containerItemSetChange(new Container.ItemSetChangeEvent() {
+    // private static final long serialVersionUID = -5083660879306951876L;
+    //
+    // public Container getContainer() {
+    // return shownContainer;
+    // }
+    // });
+    // if (alwaysRecalculateColumnWidths) {
+    // for (Object columnId : shownContainer.getContainerPropertyIds()) {
+    // setColumnWidth(columnId, -1);
+    // }
+    // }
+    // }
+    // }
 
-                public Container getContainer() {
-                    return shownContainer;
-                }
-            });
-            if(alwaysRecalculateColumnWidths){
-            	for(Object columnId : shownContainer.getContainerPropertyIds()){
-            		setColumnWidth(columnId, -1);
-            	}
-            }
-        }
-    }
+    // TODO
+    // private void fillVisibleContainer(int firstIndex) {
+    // shownContainer.removeAllItems();
+    // if (realContainer.size() != 0) {
+    // Object itemId = realContainer.getIdByIndex(firstIndex);
+    // addShownItem(itemId);
+    // for (int i = 1; i < getPageLength(); i++) {
+    // itemId = realContainer.nextItemId(itemId);
+    // if (itemId == null) {
+    // break;
+    // }
+    // // This has to be fetches because some containers return a next
+    // // item id even when there is no next item.
+    // Item item = realContainer.getItem(itemId);
+    // if (item == null) {
+    // break;
+    // }
+    // addShownItem(itemId);
+    // }
+    // }
+    // index = firstIndex;
+    // if (listeners != null) {
+    // PagedTableChangeEvent event = new PagedTableChangeEvent(this);
+    // for (PageChangeListener listener : listeners) {
+    // listener.pageChanged(event);
+    // }
+    // }
+    // }
 
-    private void fillVisibleContainer(int firstIndex) {
-        shownContainer.removeAllItems();
-        if (realContainer.size() != 0) {
-            Object itemId = realContainer.getIdByIndex(firstIndex);
-            addShownItem(itemId);
-            for (int i = 1; i < getPageLength(); i++) {
-                itemId = realContainer.nextItemId(itemId);
-                if (itemId == null) {
-                    break;
-                }
-                addShownItem(itemId);
-            }
-        }
-        index = firstIndex;
-        if (listeners != null) {
-            PagedTableChangeEvent event = new PagedTableChangeEvent(this);
-            for (PageChangeListener listener : listeners) {
-                listener.pageChanged(event);
-            }
-        }
-    }
+    // TODO
+    // private void addShownItem(Object itemId) {
+    // Item realItem = realContainer.getItem(itemId);
+    // Item shownItem = shownContainer.addItem(itemId);
+    // for (Object property : realContainer.getContainerPropertyIds()) {
+    // shownItem.getItemProperty(property).setValue(
+    // realItem.getItemProperty(property).getValue());
+    // }
+    // }
 
-    private void addShownItem(Object itemId) {
-        Item realItem = realContainer.getItem(itemId);
-        Item shownItem = shownContainer.addItem(itemId);
-        for (Object property : realContainer.getContainerPropertyIds()) {
-            shownItem.getItemProperty(property).setValue(
-                    realItem.getItemProperty(property).getValue());
-        }
-    }
-
-    @Override
-    public void setPageLength(int pageLength) {
-        if (pageLength >= 0 && getPageLength() != pageLength) {
-            super.setPageLength(pageLength);
-            setPageFirstIndex(index);
-        }
-    }
+    // TODO
+    // @Override
+    // public void setPageLength(int pageLength) {
+    // if (pageLength >= 0 && getPageLength() != pageLength) {
+    // super.setPageLength(pageLength);
+    // setPageFirstIndex(index);
+    // }
+    // }
 
     public void nextPage() {
-        setPageFirstIndex(index + getPageLength());
+        // TODO
+        // setPageFirstIndex(index + getPageLength());
     }
 
     public void previousPage() {
-        setPageFirstIndex(index - getPageLength());
+        // TODO
+        // setPageFirstIndex(index - getPageLength());
     }
 
     public int getCurrentPage() {
@@ -332,7 +337,8 @@ public class PagedTable extends Table {
             newIndex = 0;
         }
         if (newIndex >= 0 && newIndex != index) {
-            setPageFirstIndex(newIndex);
+            // TODO
+            // setPageFirstIndex(newIndex);
         }
     }
 
@@ -360,20 +366,22 @@ public class PagedTable extends Table {
         listeners.remove(listener);
     }
 
-    @Override
-    public void sort(Object[] propertyId, boolean[] ascending)
-            throws UnsupportedOperationException {
-        if (realContainer instanceof Container.Sortable) {
-            ((Container.Sortable) realContainer).sort(propertyId, ascending);
-        } else if (realContainer != null) {
-            throw new UnsupportedOperationException(
-                    "Underlying Data does not allow sorting");
-        }
-        setPageFirstIndex(index);
+    // TODO
+    // @Override
+    // public void sort(Object[] propertyId, boolean[] ascending)
+    // throws UnsupportedOperationException {
+    // if (realContainer instanceof Container.Sortable) {
+    // ((Container.Sortable) realContainer).sort(propertyId, ascending);
+    // } else if (realContainer != null) {
+    // throw new UnsupportedOperationException(
+    // "Underlying Data does not allow sorting");
+    // }
+    // setPageFirstIndex(index);
+    // }
+
+    public void setAlwaysRecalculateColumnWidths(
+            boolean alwaysRecalculateColumnWidths) {
+        this.alwaysRecalculateColumnWidths = alwaysRecalculateColumnWidths;
     }
-    
-    public void setAlwaysRecalculateColumnWidths(boolean alwaysRecalculateColumnWidths){
-    	this.alwaysRecalculateColumnWidths = alwaysRecalculateColumnWidths;
-    }
-    
+
 }
