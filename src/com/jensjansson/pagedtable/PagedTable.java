@@ -45,11 +45,9 @@ public class PagedTable extends Table {
     }
 
     // first item shown in the view for the moment
-    private int index = 0;
     private List<PageChangeListener> listeners = null;
 
-    // Real container
-    private Container.Indexed realContainer;
+    private PagedTableContainer container;
 
     public PagedTable() {
         this(null);
@@ -70,6 +68,7 @@ public class PagedTable extends Table {
         itemsPerPageSelect.addItem("25");
         itemsPerPageSelect.addItem("50");
         itemsPerPageSelect.addItem("100");
+        itemsPerPageSelect.addItem("600");
         itemsPerPageSelect.setImmediate(true);
         itemsPerPageSelect.setNullSelectionAllowed(false);
         itemsPerPageSelect.setWidth("50px");
@@ -203,8 +202,12 @@ public class PagedTable extends Table {
         controlBar.setExpandRatio(pageSize, 1);
         addListener(new PageChangeListener() {
             public void pageChanged(PagedTableChangeEvent event) {
-                previous.setEnabled(true);
-                next.setEnabled(true);
+                first.setEnabled(container.getStartIndex() > 0);
+                previous.setEnabled(container.getStartIndex() > 0);
+                next.setEnabled(container.getStartIndex() < container
+                        .getRealSize() - getPageLength());
+                last.setEnabled(container.getStartIndex() < container
+                        .getRealSize() - getPageLength());
                 currentPageTextField.setValue(String.valueOf(getCurrentPage()));
                 totalPagesLabel.setValue(getTotalAmountOfPages());
                 itemsPerPageSelect.setValue(String.valueOf(getPageLength()));
@@ -215,7 +218,7 @@ public class PagedTable extends Table {
 
     @Override
     public Container.Indexed getContainerDataSource() {
-        return realContainer;
+        return container;
     }
 
     @Override
@@ -224,45 +227,52 @@ public class PagedTable extends Table {
             throw new IllegalArgumentException(
                     "PagedTable can only use containers that implement Container.Indexed");
         }
-        Container.Indexed realContainer = (Container.Indexed) newDataSource;
-        this.realContainer = realContainer;
         PagedTableContainer pagedTableContainer = new PagedTableContainer(
-                realContainer);
+                (Container.Indexed) newDataSource);
+        pagedTableContainer.setPageLength(getPageLength());
         super.setContainerDataSource(pagedTableContainer);
+        this.container = pagedTableContainer;
+        firePagedChangedEvent();
     }
 
-    // TODO
-    // private void setPageFirstIndex(int firstIndex) {
-    // if (realContainer != null) {
-    // if (firstIndex <= 0) {
-    // firstIndex = 0;
-    // }
-    // if (firstIndex > realContainer.size() - 1) {
-    // int size = realContainer.size() - 1;
-    // int pages = 0;
-    // if (getPageLength() != 0) {
-    // pages = (int) Math.floor(0.0 + size / getPageLength());
-    // }
-    // firstIndex = pages * getPageLength();
-    // }
-    // shownContainer
-    // .removeListener((Container.ItemSetChangeListener) this);
-    // fillVisibleContainer(firstIndex);
-    // shownContainer.addListener((Container.ItemSetChangeListener) this);
-    // containerItemSetChange(new Container.ItemSetChangeEvent() {
-    // private static final long serialVersionUID = -5083660879306951876L;
-    //
-    // public Container getContainer() {
-    // return shownContainer;
-    // }
-    // });
-    // if (alwaysRecalculateColumnWidths) {
-    // for (Object columnId : shownContainer.getContainerPropertyIds()) {
-    // setColumnWidth(columnId, -1);
-    // }
-    // }
-    // }
-    // }
+    private void setPageFirstIndex(int firstIndex) {
+        if (container != null) {
+            if (firstIndex <= 0) {
+                firstIndex = 0;
+            }
+            if (firstIndex > container.getRealSize() - 1) {
+                int size = container.getRealSize() - 1;
+                int pages = 0;
+                if (getPageLength() != 0) {
+                    pages = (int) Math.floor(0.0 + size / getPageLength());
+                }
+                firstIndex = pages * getPageLength();
+            }
+            container.setStartIndex(firstIndex);
+            containerItemSetChange(new Container.ItemSetChangeEvent() {
+                private static final long serialVersionUID = -5083660879306951876L;
+
+                public Container getContainer() {
+                    return container;
+                }
+            });
+            if (alwaysRecalculateColumnWidths) {
+                for (Object columnId : container.getContainerPropertyIds()) {
+                    setColumnWidth(columnId, -1);
+                }
+            }
+            firePagedChangedEvent();
+        }
+    }
+
+    private void firePagedChangedEvent() {
+        if (listeners != null) {
+            PagedTableChangeEvent event = new PagedTableChangeEvent(this);
+            for (PageChangeListener listener : listeners) {
+                listener.pageChanged(event);
+            }
+        }
+    }
 
     // TODO
     // private void fillVisibleContainer(int firstIndex) {
@@ -303,28 +313,27 @@ public class PagedTable extends Table {
     // }
     // }
 
-    // TODO
-    // @Override
-    // public void setPageLength(int pageLength) {
-    // if (pageLength >= 0 && getPageLength() != pageLength) {
-    // super.setPageLength(pageLength);
-    // setPageFirstIndex(index);
-    // }
-    // }
+    @Override
+    public void setPageLength(int pageLength) {
+        if (pageLength >= 0 && getPageLength() != pageLength) {
+            container.setPageLength(pageLength);
+            super.setPageLength(pageLength);
+            firePagedChangedEvent();
+        }
+    }
 
     public void nextPage() {
-        // TODO
-        // setPageFirstIndex(index + getPageLength());
+        setPageFirstIndex(container.getStartIndex() + getPageLength());
     }
 
     public void previousPage() {
-        // TODO
-        // setPageFirstIndex(index - getPageLength());
+        setPageFirstIndex(container.getStartIndex() - getPageLength());
     }
 
     public int getCurrentPage() {
         double pageLength = getPageLength();
-        int page = (int) Math.floor(index / pageLength) + 1;
+        int page = (int) Math.floor((double) container.getStartIndex()
+                / pageLength) + 1;
         if (page < 1) {
             page = 1;
         }
@@ -336,14 +345,13 @@ public class PagedTable extends Table {
         if (newIndex < 0) {
             newIndex = 0;
         }
-        if (newIndex >= 0 && newIndex != index) {
-            // TODO
-            // setPageFirstIndex(newIndex);
+        if (newIndex >= 0 && newIndex != container.getStartIndex()) {
+            setPageFirstIndex(newIndex);
         }
     }
 
     public int getTotalAmountOfPages() {
-        int size = realContainer.size();
+        int size = container.getContainer().size();
         double pageLength = getPageLength();
         int pageCount = (int) Math.ceil(size / pageLength);
         if (pageCount < 1) {

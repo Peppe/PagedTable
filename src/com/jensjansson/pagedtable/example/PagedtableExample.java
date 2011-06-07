@@ -40,7 +40,7 @@ public class PagedtableExample extends Application {
         pagedTable.setContainerDataSource(createContainer());
         pagedTable.setRowHeaderMode(Table.ROW_HEADER_MODE_ICON_ONLY);
         pagedTable.setItemIconPropertyId(FLAG);
-        pagedTable.setWidth("700px");
+        pagedTable.setWidth("1000px");
         pagedTable.setPageLength(25);
         pagedTable.setImmediate(true);
         pagedTable.setSelectable(true);
@@ -102,7 +102,7 @@ public class PagedtableExample extends Application {
             "CHAD", "TD", "CHILE", "CL", "CHINA", "CN", "CHRISTMAS ISLAND",
             "CX", "COCOS (KEELING) ISLANDS", "CC", "COLOMBIA", "CO", "COMOROS",
             "KM", "CONGO", "CG", "CONGO, THE DEMOCRATIC REPUBLIC OF THE", "CD",
-            "COOK ISLANDS", "CK", "COSTA RICA", "CR", "C�TE D'IVOIRE", "CI",
+            "COOK ISLANDS", "CK", "COSTA RICA", "CR", "COTE D'IVOIRE", "CI",
             "CROATIA", "HR", "CUBA", "CU", "CYPRUS", "CY", "CZECH REPUBLIC",
             "CZ", "DENMARK", "DK", "DJIBOUTI", "DJ", "DOMINICA", "DM",
             "DOMINICAN REPUBLIC", "DO", "ECUADOR", "EC", "EGYPT", "EG",

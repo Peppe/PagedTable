@@ -12,10 +12,58 @@ public class PagedTableContainer extends AbstractContainer implements
     private static final long serialVersionUID = -2134233618583099046L;
 
     private final Container.Indexed container;
+    private int pageLength = 25;
+    private int startIndex = 0;
 
     public PagedTableContainer(Container.Indexed container) {
         this.container = container;
     }
+
+    public Container.Indexed getContainer() {
+        return container;
+    }
+
+    public int getPageLength() {
+        return pageLength;
+    }
+
+    public void setPageLength(int pageLength) {
+        this.pageLength = pageLength;
+    }
+
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public void setStartIndex(int startIndex) {
+        this.startIndex = startIndex;
+    }
+
+    /*
+     * Overridden methods from the real container from here forward
+     */
+
+    @Override
+    public int size() {
+        int rowsLeft = container.size() - startIndex;
+        if (rowsLeft > pageLength) {
+            return pageLength;
+        } else {
+            return rowsLeft;
+        }
+    }
+
+    public int getRealSize() {
+        return container.size();
+    }
+
+    public Object getIdByIndex(int index) {
+        return container.getIdByIndex(index + startIndex);
+    }
+
+    /*
+     * Delegate methods to real container from here on
+     */
 
     @Override
     public Item getItem(Object itemId) {
@@ -40,11 +88,6 @@ public class PagedTableContainer extends AbstractContainer implements
     @Override
     public Class<?> getType(Object propertyId) {
         return container.getType(propertyId);
-    }
-
-    @Override
-    public int size() {
-        return container.size();
     }
 
     @Override
@@ -121,10 +164,6 @@ public class PagedTableContainer extends AbstractContainer implements
 
     public int indexOfId(Object itemId) {
         return container.indexOfId(itemId);
-    }
-
-    public Object getIdByIndex(int index) {
-        return container.getIdByIndex(index);
     }
 
     public Object addItemAt(int index) throws UnsupportedOperationException {
