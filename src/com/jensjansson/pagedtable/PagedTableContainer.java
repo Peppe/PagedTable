@@ -1,6 +1,7 @@
 package com.jensjansson.pagedtable;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
@@ -8,7 +9,7 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.AbstractContainer;
 
 public class PagedTableContainer extends AbstractContainer implements
-        Container.Indexed {
+        Container.Indexed, Container.Sortable {
     private static final long serialVersionUID = -2134233618583099046L;
 
     private final Container.Indexed container;
@@ -173,6 +174,22 @@ public class PagedTableContainer extends AbstractContainer implements
     public Item addItemAt(int index, Object newItemId)
             throws UnsupportedOperationException {
         return container.addItemAt(index, newItemId);
+    }
+
+    @Override
+    public void sort(Object[] propertyId, boolean[] ascending) {
+        if (container instanceof Container.Sortable) {
+            ((Container.Sortable) container).sort(propertyId, ascending);
+        }
+    }
+
+    @Override
+    public Collection<?> getSortableContainerPropertyIds() {
+        if (container instanceof Container.Sortable) {
+            return ((Container.Sortable) container)
+                    .getSortableContainerPropertyIds();
+        }
+        return Collections.EMPTY_LIST;
     }
 
 }
