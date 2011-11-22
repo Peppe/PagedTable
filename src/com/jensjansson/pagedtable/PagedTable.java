@@ -19,7 +19,7 @@ import com.vaadin.ui.themes.Reindeer;
 public class PagedTable extends Table {
     private static final long serialVersionUID = 6881455780158545828L;
 
-    interface PageChangeListener {
+    public interface PageChangeListener {
         public void pageChanged(PagedTableChangeEvent event);
     }
 
@@ -44,7 +44,6 @@ public class PagedTable extends Table {
         }
     }
 
-    // first item shown in the view for the moment
     private List<PageChangeListener> listeners = null;
 
     private PagedTableContainer container;
@@ -274,45 +273,6 @@ public class PagedTable extends Table {
         }
     }
 
-    // TODO
-    // private void fillVisibleContainer(int firstIndex) {
-    // shownContainer.removeAllItems();
-    // if (realContainer.size() != 0) {
-    // Object itemId = realContainer.getIdByIndex(firstIndex);
-    // addShownItem(itemId);
-    // for (int i = 1; i < getPageLength(); i++) {
-    // itemId = realContainer.nextItemId(itemId);
-    // if (itemId == null) {
-    // break;
-    // }
-    // // This has to be fetches because some containers return a next
-    // // item id even when there is no next item.
-    // Item item = realContainer.getItem(itemId);
-    // if (item == null) {
-    // break;
-    // }
-    // addShownItem(itemId);
-    // }
-    // }
-    // index = firstIndex;
-    // if (listeners != null) {
-    // PagedTableChangeEvent event = new PagedTableChangeEvent(this);
-    // for (PageChangeListener listener : listeners) {
-    // listener.pageChanged(event);
-    // }
-    // }
-    // }
-
-    // TODO
-    // private void addShownItem(Object itemId) {
-    // Item realItem = realContainer.getItem(itemId);
-    // Item shownItem = shownContainer.addItem(itemId);
-    // for (Object property : realContainer.getContainerPropertyIds()) {
-    // shownItem.getItemProperty(property).setValue(
-    // realItem.getItemProperty(property).getValue());
-    // }
-    // }
-
     @Override
     public void setPageLength(int pageLength) {
         if (pageLength >= 0 && getPageLength() != pageLength) {
@@ -373,19 +333,6 @@ public class PagedTable extends Table {
         }
         listeners.remove(listener);
     }
-
-    // TODO
-    // @Override
-    // public void sort(Object[] propertyId, boolean[] ascending)
-    // throws UnsupportedOperationException {
-    // if (realContainer instanceof Container.Sortable) {
-    // ((Container.Sortable) realContainer).sort(propertyId, ascending);
-    // } else if (realContainer != null) {
-    // throw new UnsupportedOperationException(
-    // "Underlying Data does not allow sorting");
-    // }
-    // setPageFirstIndex(index);
-    // }
 
     public void setAlwaysRecalculateColumnWidths(
             boolean alwaysRecalculateColumnWidths) {
