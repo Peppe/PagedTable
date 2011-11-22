@@ -6,10 +6,9 @@ import java.util.Collections;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
-import com.vaadin.data.util.AbstractContainer;
 
-public class PagedTableContainer extends AbstractContainer implements
-        Container.Indexed, Container.Sortable {
+public class PagedTableContainer implements Container, Container.Indexed,
+        Container.Sortable {
     private static final long serialVersionUID = -2134233618583099046L;
 
     private final Container.Indexed container;
@@ -115,18 +114,18 @@ public class PagedTableContainer extends AbstractContainer implements
     @Override
     public boolean addContainerProperty(Object propertyId, Class<?> type,
             Object defaultValue) throws UnsupportedOperationException {
-        return addContainerProperty(propertyId, type, defaultValue);
+        return container.addContainerProperty(propertyId, type, defaultValue);
     }
 
     @Override
     public boolean removeContainerProperty(Object propertyId)
             throws UnsupportedOperationException {
-        return removeContainerProperty(propertyId);
+        return container.removeContainerProperty(propertyId);
     }
 
     @Override
     public boolean removeAllItems() throws UnsupportedOperationException {
-        return removeAllItems();
+        return container.removeAllItems();
     }
 
     public Object nextItemId(Object itemId) {
@@ -175,6 +174,10 @@ public class PagedTableContainer extends AbstractContainer implements
             throws UnsupportedOperationException {
         return container.addItemAt(index, newItemId);
     }
+
+    /*
+     * Sorting interface from here on
+     */
 
     @Override
     public void sort(Object[] propertyId, boolean[] ascending) {
