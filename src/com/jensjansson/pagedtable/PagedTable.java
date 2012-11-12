@@ -243,6 +243,7 @@ public class PagedTable extends Table {
                 firstIndex = pages * getPageLength();
             }
             container.setStartIndex(firstIndex);
+            setCurrentPageFirstItemIndex(firstIndex);
             containerItemSetChange(new Container.ItemSetChangeEvent() {
                 private static final long serialVersionUID = -5083660879306951876L;
 
