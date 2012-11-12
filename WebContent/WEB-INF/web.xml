@@ -2,17 +2,16 @@
 <web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>PagedTable</display-name>
 	<context-param>
-		<description>
-		Vaadin production mode</description>
+		<description>Vaadin production mode</description>
 		<param-name>productionMode</param-name>
 		<param-value>false</param-value>
 	</context-param>
 	<servlet>
 		<servlet-name>PagedTable Example</servlet-name>
-		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
-		<init-param>
+        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+        <init-param>
 			<description>Vaadin application class to start</description>
-			<param-name>application</param-name>
+			<param-name>UI</param-name>
 			<param-value>com.jensjansson.pagedtable.example.PagedtableExample</param-value>
 		</init-param>
 	</servlet>
