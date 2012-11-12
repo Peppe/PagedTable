@@ -1,6 +1,7 @@
 package com.jensjansson.pagedtable;
 
 import com.vaadin.data.Container;
+import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -79,6 +80,7 @@ public class PagedTable extends Table {
         final TextField currentPageTextField = new TextField();
         currentPageTextField.setValue(String.valueOf(getCurrentPage()));
         currentPageTextField.setConverter(Integer.class);
+        currentPageTextField.addValidator(new IntegerRangeValidator("Wrong page number", 1, getTotalAmountOfPages()));
         Label separatorLabel = new Label("&nbsp;/&nbsp;", ContentMode.HTML);
         final Label totalPagesLabel = new Label(
                 String.valueOf(getTotalAmountOfPages()), ContentMode.HTML);
