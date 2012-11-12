@@ -1,29 +1,26 @@
 package com.jensjansson.pagedtable.example;
 
 import com.jensjansson.pagedtable.PagedTable;
-import com.vaadin.Application;
+import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
+import com.vaadin.server.Resource;
+import com.vaadin.server.ThemeResource;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Table.ColumnGenerator;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
-public class PagedtableExample extends Application {
+@Theme("pagedtabletheme")
+@Title("PagedTable Example")
+public class PagedtableExample extends UI {
 
     private static final long serialVersionUID = 8672592529682639044L;
 
     @Override
-    public void init() {
+    protected void init(final VaadinRequest request) {
         VerticalLayout mainLayout = new VerticalLayout();
-        Window mainWindow = new Window("PagedTable Example", mainLayout);
         VerticalLayout tableLayout = new VerticalLayout();
-        setMainWindow(mainWindow);
         tableLayout.setSizeUndefined();
         PagedTable table = createTable();
         tableLayout.addComponent(table);
@@ -31,14 +28,15 @@ public class PagedtableExample extends Application {
         mainLayout.addComponent(tableLayout);
         mainLayout.setComponentAlignment(tableLayout, Alignment.MIDDLE_CENTER);
         mainLayout.setMargin(true);
-        setTheme("pagedtabletheme");
+        addComponent(mainLayout);
     }
+
 
     public PagedTable createTable() {
         PagedTable pagedTable = new PagedTable(
                 "Hello user of Vaadin! This is an example application for the PagedTable -component.");
         pagedTable.setContainerDataSource(createContainer());
-        pagedTable.setRowHeaderMode(Table.ROW_HEADER_MODE_ICON_ONLY);
+        pagedTable.setRowHeaderMode(Table.RowHeaderMode.ICON_ONLY);
         pagedTable.setItemIconPropertyId(FLAG);
         pagedTable.setWidth("1000px");
         pagedTable.setPageLength(25);
@@ -72,10 +70,7 @@ public class PagedtableExample extends Application {
             Item item = container.addItem(id);
             item.getItemProperty(NAME).setValue(name);
             item.getItemProperty(SHORT).setValue(id);
-            item.getItemProperty(FLAG)
-                    .setValue(
-                            new ThemeResource("img/flags/" + id.toLowerCase()
-                                    + ".png"));
+            item.getItemProperty(FLAG).setValue(new ThemeResource("img/flags/" + id.toLowerCase()+ ".png"));
         }
         container.sort(new Object[] { NAME }, new boolean[] { true });
         return container;
