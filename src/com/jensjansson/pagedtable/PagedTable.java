@@ -1,20 +1,15 @@
 package com.jensjansson.pagedtable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.vaadin.data.Container;
-import com.vaadin.data.validator.IntegerValidator;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.data.validator.IntegerRangeValidator;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PagedTable extends Table {
     private static final long serialVersionUID = 6881455780158545828L;
@@ -71,7 +66,7 @@ public class PagedTable extends Table {
         itemsPerPageSelect.setImmediate(true);
         itemsPerPageSelect.setNullSelectionAllowed(false);
         itemsPerPageSelect.setWidth("50px");
-        itemsPerPageSelect.addListener(new ValueChangeListener() {
+        itemsPerPageSelect.addValueChangeListener(new ValueChangeListener() {
             private static final long serialVersionUID = -2255853716069800092L;
 
             public void valueChange(
@@ -81,16 +76,17 @@ public class PagedTable extends Table {
             }
         });
         itemsPerPageSelect.select("25");
-        Label pageLabel = new Label("Page:&nbsp;", Label.CONTENT_XHTML);
+        Label pageLabel = new Label("Page:&nbsp;", ContentMode.HTML);
         final TextField currentPageTextField = new TextField();
         currentPageTextField.setValue(String.valueOf(getCurrentPage()));
-        currentPageTextField.addValidator(new IntegerValidator(null));
-        Label separatorLabel = new Label("&nbsp;/&nbsp;", Label.CONTENT_XHTML);
+        currentPageTextField.setConverter(Integer.class);
+        currentPageTextField.addValidator(new IntegerRangeValidator("Wrong page number", 1, getTotalAmountOfPages()));
+        Label separatorLabel = new Label("&nbsp;/&nbsp;", ContentMode.HTML);
         final Label totalPagesLabel = new Label(
-                String.valueOf(getTotalAmountOfPages()), Label.CONTENT_XHTML);
+                String.valueOf(getTotalAmountOfPages()), ContentMode.HTML);
         currentPageTextField.setStyleName(Reindeer.TEXTFIELD_SMALL);
         currentPageTextField.setImmediate(true);
-        currentPageTextField.addListener(new ValueChangeListener() {
+        currentPageTextField.addValueChangeListener(new ValueChangeListener() {
             private static final long serialVersionUID = -2255853716069800092L;
 
             public void valueChange(
@@ -208,7 +204,7 @@ public class PagedTable extends Table {
                 last.setEnabled(container.getStartIndex() < container
                         .getRealSize() - getPageLength());
                 currentPageTextField.setValue(String.valueOf(getCurrentPage()));
-                totalPagesLabel.setValue(getTotalAmountOfPages());
+                totalPagesLabel.setValue(String.valueOf(getTotalAmountOfPages()));
                 itemsPerPageSelect.setValue(String.valueOf(getPageLength()));
             }
         });
@@ -248,6 +244,7 @@ public class PagedTable extends Table {
                 firstIndex = pages * getPageLength();
             }
             container.setStartIndex(firstIndex);
+            setCurrentPageFirstItemIndex(firstIndex);
             containerItemSetChange(new Container.ItemSetChangeEvent() {
                 private static final long serialVersionUID = -5083660879306951876L;
 

@@ -2,6 +2,7 @@ package com.jensjansson.pagedtable;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
@@ -195,4 +196,8 @@ public class PagedTableContainer implements Container, Container.Indexed,
         return Collections.EMPTY_LIST;
     }
 
+    @Override
+    public List<?> getItemIds(final int startIndex, final int numberOfItems) {
+        return container.getItemIds(this.startIndex, numberOfItems);
+    }
 }
