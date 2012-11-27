@@ -43,6 +43,9 @@ public class PagedTable extends Table {
 
     private PagedTableContainer container;
 
+
+
+
     public PagedTable() {
         this(null);
     }
@@ -80,7 +83,8 @@ public class PagedTable extends Table {
         final TextField currentPageTextField = new TextField();
         currentPageTextField.setValue(String.valueOf(getCurrentPage()));
         currentPageTextField.setConverter(Integer.class);
-        currentPageTextField.addValidator(new IntegerRangeValidator("Wrong page number", 1, getTotalAmountOfPages()));
+        final IntegerRangeValidator validator = new IntegerRangeValidator("Wrong page number", 1, getTotalAmountOfPages());
+        currentPageTextField.addValidator(validator);
         Label separatorLabel = new Label("&nbsp;/&nbsp;", ContentMode.HTML);
         final Label totalPagesLabel = new Label(
                 String.valueOf(getTotalAmountOfPages()), ContentMode.HTML);
@@ -206,6 +210,7 @@ public class PagedTable extends Table {
                 currentPageTextField.setValue(String.valueOf(getCurrentPage()));
                 totalPagesLabel.setValue(String.valueOf(getTotalAmountOfPages()));
                 itemsPerPageSelect.setValue(String.valueOf(getPageLength()));
+                validator.setMaxValue(getTotalAmountOfPages());
             }
         });
         return controlBar;
