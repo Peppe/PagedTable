@@ -1,5 +1,6 @@
 package com.jensjansson.pagedtable.example;
 
+import com.jensjansson.pagedtable.ControlsLayout;
 import com.jensjansson.pagedtable.PagedTable;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -24,7 +25,8 @@ public class PagedtableExample extends UI {
         tableLayout.setSizeUndefined();
         PagedTable table = createTable();
         tableLayout.addComponent(table);
-        tableLayout.addComponent(table.createControls());
+        ControlsLayout controlsLayout = table.createControls();
+        tableLayout.addComponent(controlsLayout);
         mainLayout.addComponent(tableLayout);
         mainLayout.setComponentAlignment(tableLayout, Alignment.MIDDLE_CENTER);
         mainLayout.setMargin(true);
