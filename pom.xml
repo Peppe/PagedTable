@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.vaadin.addons</groupId>
-	<artifactId>PagedTable</artifactId>
-	<packaging>war</packaging>
-	<version>0.6.6</version>
+	<artifactId>pagedtable</artifactId>
+	<packaging>jar</packaging>
+	<version>0.6.7</version>
 	<name>Vaadin Web Application</name>
 
 	<properties>

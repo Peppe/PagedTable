@@ -91,7 +91,9 @@ public class PagedTable extends Table {
                 firstIndex = pages * getPageLength();
             }
             container.setStartIndex(firstIndex);
-            setCurrentPageFirstItemIndex(firstIndex);
+            // this was causing redundant call of getItemIds(start, end)
+            // and it is not needed because this method is called by fired page changed event
+            //setCurrentPageFirstItemIndex(firstIndex);
             containerItemSetChange(new Container.ItemSetChangeEvent() {
                 private static final long serialVersionUID = -5083660879306951876L;
 
