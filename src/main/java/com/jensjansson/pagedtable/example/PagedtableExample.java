@@ -26,9 +26,13 @@ public class PagedtableExample extends UI {
         VerticalLayout mainLayout = new VerticalLayout();
         VerticalLayout tableLayout = new VerticalLayout();
         tableLayout.setSizeUndefined();
+
         PagedTable table = createLazyTable();
-        tableLayout.addComponent(table);
         ControlsLayout controlsLayout = table.createControls();
+
+        controlsLayout.getItemsPerPageLabel().setValue("Other label...");
+
+        tableLayout.addComponent(table);
         tableLayout.addComponent(controlsLayout);
         mainLayout.addComponent(tableLayout);
         mainLayout.setComponentAlignment(tableLayout, Alignment.MIDDLE_CENTER);
@@ -41,7 +45,7 @@ public class PagedtableExample extends UI {
 
     public PagedTable createLazyTable() {
         PagedTable pagedTable = new PagedTable(
-                "Hello user of Vaadin! This is an example application of PagedTable component.");
+                "PagedTable example.");
         LazyLoadedContainerExamle container = new LazyLoadedContainerExamle(UserExample.class);
         pagedTable.setContainerDataSource(container);
         pagedTable.setWidth("1000px");

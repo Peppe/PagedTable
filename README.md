@@ -36,6 +36,8 @@ public class PagedtableExample extends UI {
         PagedTable table = createLazyTable();
         ControlsLayout controlsLayout = table.createControls();
 
+        controlsLayout.getItemsPerPageLabel().setValue("Other label...");
+
         tableLayout.addComponent(table);
         tableLayout.addComponent(controlsLayout);
         mainLayout.addComponent(tableLayout);
