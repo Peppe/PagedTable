@@ -122,6 +122,7 @@ class LazyLoadedContainerExamle extends BeanContainer {
 
     @Override
     public int size() {
+        // TODO: here you should get COUNT from database
         int size = dbFake.size();
         return size;
     }
@@ -134,7 +135,7 @@ class LazyLoadedContainerExamle extends BeanContainer {
     @Override
     public List<?> getItemIds(final int startIndex, final int numberOfItems) {
         int end = startIndex + numberOfItems;
-        // kind of logging... should be replaced (but the example should go to separate project first)
+        // TODO: here you should place fetching data from database (it should be paged SQL of course)
         System.out.println("start: " + startIndex + ", end: " + end);
         List<UserExample> res = dbFake.subList(startIndex, end);
         return res;
