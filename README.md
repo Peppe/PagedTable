@@ -15,14 +15,27 @@ Maven Dependency
 </repository>
 ```
 
-Grails Dependency
+Simple Example (in Java)
 
-```
-mavenRepo "http://qiiip.org/mavenRepo"
-compile "org.vaadin.addons:pagedtable:0.6.7"
+```java
+public class PagedtableExample extends UI {
+
+    @Override
+    protected void init(final VaadinRequest request) {
+        PagedTable table = new PagedTable("PagedTable Example");
+        ControlsLayout controls = table.createControls();
+
+        BeanItemContainer container = new BeanItemContainer(User.class);
+        table.setContainerDataSource(container);
+
+        layout.addComponent(table);
+        layout.addComponent(controls);
+        setContent(layout);
+    }
+}
 ```
 
-Example (in Java)
+Complex Example with Lazy Loading (in Java)
 
 ```java
 public class PagedtableExample extends UI {
@@ -129,44 +142,9 @@ class LazyLoadedContainerExamle extends BeanContainer {
 }
 ```
 
-Example (in Groovy)
+Grails Dependency
 
-```groovy
-class AgreementsTable extends PagedTable {
-
-    BeanItemContainer container
-
-    AgreementsTable() {
-        super("Agreements")
-        setWidth("100%")
-
-        setSelectable(false)
-        setImmediate(true)
-        setAlwaysRecalculateColumnWidths(true)
-        setPageLength(10)
-        setBuffered(false)
-        setSortEnabled(true)
-        setColumnReorderingAllowed(false)
-        setColumnCollapsingAllowed(false)
-
-        container = new BeanItemContainer(Agreement.class)
-        container.setBeanIdProperty("id");
-
-        setContainerDataSource(container)
-
-        Object[] visibleColumnIds = ["id", "label"]
-        setVisibleColumns(visibleColumnIds)
-
-        String[] columnHeaders = new String[visibleColumnIds.length]
-        Integer[] columnWidths = [20, 200]
-
-        for (int i = 0; i < visibleColumnIds.length; i++) {
-            String columnId = visibleColumnIds[i]
-            columnHeaders[i] = I18N.i18n(columnId)
-            Integer width = columnWidths[i]
-            setColumnWidth(columnId, width)
-        }
-        setColumnHeaders(columnHeaders)
-    }
-}
+```
+mavenRepo "http://qiiip.org/mavenRepo"
+compile "org.vaadin.addons:pagedtable:0.6.7"
 ```
