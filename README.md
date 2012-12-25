@@ -2,6 +2,7 @@ This is a Vaadin add-on component.
 
 Maven Dependency
 
+```
     <dependency>
        <groupId>org.vaadin.addons</groupId>
        <artifactId>pagedtable</artifactId>
@@ -12,14 +13,18 @@ Maven Dependency
        <id>qiiip-repo</id>
        <url>http://qiiip.org/mavenRepo</url>
     </repository>
+```
 
 Grails Dependency
 
+```
     mavenRepo "http://qiiip.org/mavenRepo"
     compile 'org.vaadin.addons:pagedtable:0.6.7'
+```
 
 Example (in Groovy)
 
+```
     class AgreementsTable extends PagedTable {
 
         BeanItemContainer container
@@ -57,4 +62,4 @@ Example (in Groovy)
             setColumnHeaders(columnHeaders)
         }
     }
-
+```
