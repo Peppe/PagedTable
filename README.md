@@ -39,6 +39,24 @@ public class PagedtableExample extends UI {
 }
 ```
 
+## How to localize or change navigation labels
+
+When you create a new instance of PagedTable then you should create controls layout by using createControls() method. createControls() method returns instance of ControlLayout class. You can do the following then.
+
+```java
+ControlsLayout controls = table.createControls();
+
+controls.getItemsPerPageLabel().setValue("Items");
+controls.getBtnFirst().setCaption("First");
+controls.getBtnLast().setCaption("Last");
+controls.getBtnNext().setCaption("Next");
+controls.getBtnPrevious().setCaption("Previous");
+controls.getPageLabel().setValue("Current:");
+```
+
+This is how the paged table is going to look like.
+![Paged Table customized](http://qiiip.org/github/PagedTable/pagedtable-example-customized.png)
+
 ## Complex Example with Lazy Loading
 
 In case you need lazy loading from database you might need this kind of paged table implementation. This is just an example and I don't think usable in real world project. If you want lazy container without much effort try to look here [Lazy Container](https://github.com/ondrej-kvasnovsky/lazy-container).

@@ -28,12 +28,17 @@ public class PagedtableExample extends UI {
         tableLayout.setSizeUndefined();
 
         PagedTable table = createLazyTable();
-        ControlsLayout controlsLayout = table.createControls();
+        ControlsLayout controls = table.createControls();
 
-        controlsLayout.getItemsPerPageLabel().setValue("Other label...");
+        controls.getItemsPerPageLabel().setValue("Items");
+        controls.getBtnFirst().setCaption("First");
+        controls.getBtnLast().setCaption("Last");
+        controls.getBtnNext().setCaption("Next");
+        controls.getBtnPrevious().setCaption("Previous");
+        controls.getPageLabel().setValue("Current:");
 
         tableLayout.addComponent(table);
-        tableLayout.addComponent(controlsLayout);
+        tableLayout.addComponent(controls);
         mainLayout.addComponent(tableLayout);
         mainLayout.setComponentAlignment(tableLayout, Alignment.MIDDLE_CENTER);
         mainLayout.setMargin(true);
@@ -48,7 +53,7 @@ public class PagedtableExample extends UI {
                 "PagedTable example.");
         LazyLoadedContainerExamle container = new LazyLoadedContainerExamle(UserExample.class);
         pagedTable.setContainerDataSource(container);
-        pagedTable.setWidth("1000px");
+        pagedTable.setWidth("500px");
         pagedTable.setPageLength(10);
         pagedTable.setImmediate(true);
         pagedTable.setSelectable(true);

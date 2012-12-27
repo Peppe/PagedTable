@@ -20,6 +20,7 @@ public class ControlsLayout extends HorizontalLayout {
     private Button btnPrevious = new Button("<");
     private Button btnNext = new Button(">");
     private Button btnLast = new Button(">>");
+    private TextField currentPageTextField = new TextField();
 
     public ControlsLayout(final PagedTable table) {
 
@@ -40,7 +41,6 @@ public class ControlsLayout extends HorizontalLayout {
             }
         });
         itemsPerPageSelect.select("10");
-        final TextField currentPageTextField = new TextField();
         currentPageTextField.setValue(String.valueOf(table.getCurrentPage()));
         currentPageTextField.setConverter(Integer.class);
         final IntegerRangeValidator validator = new IntegerRangeValidator("Wrong page number", 1, table.getTotalAmountOfPages());
@@ -209,5 +209,9 @@ public class ControlsLayout extends HorizontalLayout {
 
     public Button getBtnLast() {
         return btnLast;
+    }
+
+    public TextField getCurrentPageTextField() {
+        return currentPageTextField;
     }
 }
