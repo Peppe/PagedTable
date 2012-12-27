@@ -41,7 +41,7 @@ public class PagedtableExample extends UI {
 
 ## How to localize or change navigation labels
 
-When you create a new instance of PagedTable then you should create controls layout by using createControls() method. createControls() method returns instance of ControlLayout class. You can do the following then.
+When you create a new instance of [PagedTable](https://github.com/ondrej-kvasnovsky/PagedTable/blob/master/src/main/java/com/jensjansson/pagedtable/PagedTable.java) then you should create controls layout by using [createControls()](https://github.com/ondrej-kvasnovsky/PagedTable/blob/master/src/main/java/com/jensjansson/pagedtable/PagedTable.java#L57) method. [createControls()](https://github.com/ondrej-kvasnovsky/PagedTable/blob/master/src/main/java/com/jensjansson/pagedtable/PagedTable.java#L57) method returns instance of [ControlLayout](https://github.com/ondrej-kvasnovsky/PagedTable/blob/master/src/main/java/com/jensjansson/pagedtable/ControlsLayout.java) class. You can do the following then.
 
 ```java
 ControlsLayout controls = table.createControls();
@@ -72,8 +72,6 @@ public class PagedtableExample extends UI {
 
         PagedTable table = createLazyTable();
         ControlsLayout controlsLayout = table.createControls();
-
-        controlsLayout.getItemsPerPageLabel().setValue("Other label...");
 
         tableLayout.addComponent(table);
         tableLayout.addComponent(controlsLayout);
