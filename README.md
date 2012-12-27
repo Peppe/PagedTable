@@ -1,6 +1,8 @@
+# Paged Table
+
 This is a Vaadin 7 add-on component.
 
-Maven Dependency
+## Maven Dependency
 
 ```xml
 <dependency>
@@ -15,7 +17,7 @@ Maven Dependency
 </repository>
 ```
 
-Simple Example (in Java)
+## Simple Example (in Java)
 
 ```java
 public class PagedtableExample extends UI {
@@ -35,7 +37,9 @@ public class PagedtableExample extends UI {
 }
 ```
 
-Complex Example with Lazy Loading (in Java)
+## Complex Example with Lazy Loading (in Java)
+
+In case you need lazy loading from database you might need this kind of paged table implementation. This is just an example and I don't think usable in real world project. If you want lazy container without much effort try to look here: [Lazy Container](https://github.com/ondrej-kvasnovsky/lazy-container).
 
 ```java
 public class PagedtableExample extends UI {
@@ -143,7 +147,7 @@ class LazyLoadedContainerExamle extends BeanContainer {
 }
 ```
 
-Grails Dependency
+## Grails Dependency
 
 ```
 mavenRepo "http://qiiip.org/mavenRepo"
