@@ -2,7 +2,7 @@
 
 This is a Vaadin 7 add-on component.
 
-![Paged Table](http://qiiip.org/github/PagedTable/pagedtable-example.png)
+![Paged Table](http://gerades.savana.cz/github/PagedTable/pagedtable-example.png)
 
 ## Maven Dependency
 
