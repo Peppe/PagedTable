@@ -9,6 +9,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.Reindeer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class PagedTable extends Table {
@@ -65,6 +66,11 @@ public class PagedTable extends Table {
 
     @Override
     public void setContainerDataSource(Container newDataSource) {
+        setContainerDataSource(newDataSource, null);
+    }
+
+    @Override
+    public void setContainerDataSource(Container newDataSource, Collection<?> visibleIds) {
         if (!(newDataSource instanceof Container.Indexed)) {
             throw new IllegalArgumentException(
                     "PagedTable can only use containers that implement Container.Indexed");
@@ -72,7 +78,11 @@ public class PagedTable extends Table {
         PagedTableContainer pagedTableContainer = new PagedTableContainer(
                 (Container.Indexed) newDataSource);
         pagedTableContainer.setPageLength(getPageLength());
-        super.setContainerDataSource(pagedTableContainer);
+        if (visibleIds!=null) {
+            super.setContainerDataSource(pagedTableContainer, visibleIds);
+        } else {
+            super.setContainerDataSource(pagedTableContainer);
+        }
         this.container = pagedTableContainer;
         firePagedChangedEvent();
     }
