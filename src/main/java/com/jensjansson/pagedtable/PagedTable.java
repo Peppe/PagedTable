@@ -120,13 +120,19 @@ public class PagedTable extends Table {
         }
     }
 
-    private void firePagedChangedEvent() {
+    protected void firePagedChangedEvent() {
         if (listeners != null) {
             PagedTableChangeEvent event = new PagedTableChangeEvent(this);
             for (PageChangeListener listener : listeners) {
                 listener.pageChanged(event);
             }
         }
+    }
+
+    @Override
+    public void containerItemSetChange(Container.ItemSetChangeEvent event) {
+        super.containerItemSetChange(event);
+        firePagedChangedEvent();
     }
 
     @Override
