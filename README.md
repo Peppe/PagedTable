@@ -10,7 +10,7 @@ This is a Vaadin 7 add-on component.
 <dependency>
    <groupId>org.vaadin.addons</groupId>
    <artifactId>pagedtable</artifactId>
-   <version>0.6.7</version>
+   <version>0.6.8</version>
 </dependency>
 
 <repository>
@@ -169,5 +169,5 @@ class LazyLoadedContainerExamle extends BeanContainer {
 
 ```
 mavenRepo "http://qiiip.org/mavenRepo"
-compile "org.vaadin.addons:pagedtable:0.6.7"
+compile "org.vaadin.addons:pagedtable:0.6.8"
 ```
