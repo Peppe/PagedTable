@@ -1,7 +1,0 @@
-This is a Vaadin add-on component. The package can be downloaded from http://vaadin.com/directory#addon/pagedtable.
-
-PagedTable is a component that behaves in the same matter as the Vaadin core Table, except that it has multiple pages instead of scrolling to show more entries. 
-
-You can set the amount of rows to be shown with setPageLength. Changing pages can be implemented yourself with the methods nextPage(), previousPage(), getCurrentPage(), getTotalAmountOfPages() or you can ask the table to create a control layout for you with createControls (returns a HorizontalLayout).
-
-The table has a handler, PageTableEvents, that can be set with setHandler. The handler will notify you when viewed page has changed
