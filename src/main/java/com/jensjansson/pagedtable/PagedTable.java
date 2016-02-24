@@ -1,16 +1,11 @@
 package com.jensjansson.pagedtable;
 
-import com.vaadin.data.Container;
-import com.vaadin.data.validator.IntegerRangeValidator;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.themes.Reindeer;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import com.vaadin.data.Container;
+import com.vaadin.ui.Table;
 
 public class PagedTable extends Table {
     private static final long serialVersionUID = 6881455780158545828L;
@@ -44,7 +39,6 @@ public class PagedTable extends Table {
 
     private PagedTableContainer container;
 
-
     public PagedTable() {
         this(null);
     }
@@ -70,15 +64,24 @@ public class PagedTable extends Table {
     }
 
     @Override
-    public void setContainerDataSource(Container newDataSource, Collection<?> visibleIds) {
+    public void setContainerDataSource(Container newDataSource,
+            Collection<?> visibleIds) {
         if (!(newDataSource instanceof Container.Indexed)) {
             throw new IllegalArgumentException(
                     "PagedTable can only use containers that implement Container.Indexed");
         }
-        PagedTableContainer pagedTableContainer = new PagedTableContainer(
-                (Container.Indexed) newDataSource);
+
+        PagedTableContainer pagedTableContainer = null;
+
+        if (newDataSource instanceof PagedTableContainer) {
+            pagedTableContainer = (PagedTableContainer) newDataSource;
+        } else {
+            pagedTableContainer = new PagedTableContainer(
+                    (Container.Indexed) newDataSource);
+        }
+
         pagedTableContainer.setPageLength(getPageLength());
-        if (visibleIds!=null) {
+        if (visibleIds != null) {
             super.setContainerDataSource(pagedTableContainer, visibleIds);
         } else {
             super.setContainerDataSource(pagedTableContainer);
@@ -102,8 +105,9 @@ public class PagedTable extends Table {
             }
             container.setStartIndex(firstIndex);
             // this was causing redundant call of getItemIds(start, end)
-            // and it is not needed because this method is called by fired page changed event
-            //setCurrentPageFirstItemIndex(firstIndex);
+            // and it is not needed because this method is called by fired page
+            // changed event
+            // setCurrentPageFirstItemIndex(firstIndex);
             containerItemSetChange(new Container.ItemSetChangeEvent() {
                 private static final long serialVersionUID = -5083660879306951876L;
 
@@ -154,8 +158,8 @@ public class PagedTable extends Table {
 
     public int getCurrentPage() {
         double pageLength = getPageLength();
-        int page = (int) Math.floor((double) container.getStartIndex()
-                / pageLength) + 1;
+        int page = (int) Math
+                .floor((double) container.getStartIndex() / pageLength) + 1;
         if (page < 1) {
             page = 1;
         }
