@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
+Vaadin-License-Title: Apache License 2.0
 Implementation-Title: PagedTable
-Implementation-Version: 0.6.5
+Implementation-Version: 0.6.9
 Vaadin-Package-Version: 1
 Class-Path: 
 

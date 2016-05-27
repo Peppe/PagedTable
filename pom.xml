@@ -5,7 +5,7 @@
 	<groupId>org.vaadin.addons</groupId>
 	<artifactId>pagedtable</artifactId>
 	<packaging>jar</packaging>
-	<version>0.6.8</version>
+	<version>0.6.9</version>
 	<name>Vaadin Web Application</name>
 
 	<properties>

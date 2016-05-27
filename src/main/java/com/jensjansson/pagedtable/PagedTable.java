@@ -1,5 +1,6 @@
 package com.jensjansson.pagedtable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,13 +9,13 @@ import com.vaadin.data.Container;
 import com.vaadin.ui.Table;
 
 public class PagedTable extends Table {
-    private static final long serialVersionUID = 6881455780158545828L;
+        private static final long serialVersionUID = 4567719676344232576L;
 
-    public interface PageChangeListener {
+        public interface PageChangeListener extends Serializable {
         public void pageChanged(PagedTableChangeEvent event);
     }
 
-    public class PagedTableChangeEvent {
+    public static class PagedTableChangeEvent {
 
         final PagedTable table;
 

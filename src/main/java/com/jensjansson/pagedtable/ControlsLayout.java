@@ -12,6 +12,7 @@ import com.vaadin.ui.themes.Reindeer;
  * @author Ondrej Kvasnovsky
  */
 public class ControlsLayout extends HorizontalLayout {
+    private static final long serialVersionUID = -4908562879088496088L;
 
     private ComboBox itemsPerPageSelect = new ComboBox();
     private Label itemsPerPageLabel = new Label("Items per page:");
@@ -165,7 +166,9 @@ public class ControlsLayout extends HorizontalLayout {
         setExpandRatio(pageSize, 1);
 
         table.addListener(new PagedTable.PageChangeListener() {
-            public void pageChanged(PagedTable.PagedTableChangeEvent event) {
+                private static final long serialVersionUID = -5737029909567376656L;
+
+                public void pageChanged(PagedTable.PagedTableChangeEvent event) {
                 PagedTableContainer containerDataSource = (PagedTableContainer) table.getContainerDataSource();
                 int startIndex = containerDataSource.getStartIndex();
                 btnFirst.setEnabled(startIndex > 0);
