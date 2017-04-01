@@ -1,12 +1,12 @@
 package com.jensjansson.pagedtable;
 
+import com.vaadin.v7.data.Container;
+import com.vaadin.v7.data.Item;
+import com.vaadin.v7.data.Property;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import com.vaadin.data.Container;
-import com.vaadin.data.Item;
-import com.vaadin.data.Property;
 
 public class PagedTableContainer implements Container, Container.Indexed,
         Container.Sortable {
@@ -114,7 +114,7 @@ public class PagedTableContainer implements Container, Container.Indexed,
 
     @Override
     public boolean addContainerProperty(Object propertyId, Class<?> type,
-            Object defaultValue) throws UnsupportedOperationException {
+                                        Object defaultValue) throws UnsupportedOperationException {
         return container.addContainerProperty(propertyId, type, defaultValue);
     }
 

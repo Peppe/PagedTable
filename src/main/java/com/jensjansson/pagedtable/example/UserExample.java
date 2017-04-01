@@ -1,8 +1,5 @@
 package com.jensjansson.pagedtable.example;
 
-/**
- * @author Ondrej Kvasnovsky
- */
 public class UserExample {
 
     private String name;

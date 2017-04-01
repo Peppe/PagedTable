@@ -1,15 +1,18 @@
 package com.jensjansson.pagedtable;
 
-import com.vaadin.data.Property;
-import com.vaadin.data.validator.IntegerRangeValidator;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-import com.vaadin.ui.themes.Reindeer;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.v7.data.Property;
+import com.vaadin.v7.data.validator.IntegerRangeValidator;
+import com.vaadin.v7.shared.ui.label.ContentMode;
+import com.vaadin.v7.ui.ComboBox;
+import com.vaadin.v7.ui.HorizontalLayout;
+import com.vaadin.v7.ui.Label;
+import com.vaadin.v7.ui.TextField;
+import com.vaadin.v7.ui.themes.Reindeer;
 
 /**
  * {@link ControlsLayout} represents buttons and combo-box for controlling the paging.
- *
- * @author Ondrej Kvasnovsky
  */
 public class ControlsLayout extends HorizontalLayout {
     private static final long serialVersionUID = -4908562879088496088L;
@@ -17,6 +20,7 @@ public class ControlsLayout extends HorizontalLayout {
     private ComboBox itemsPerPageSelect = new ComboBox();
     private Label itemsPerPageLabel = new Label("Items per page:");
     private Label pageLabel = new Label("Page:&nbsp;", ContentMode.HTML);
+
     private Button btnFirst = new Button("<<");
     private Button btnPrevious = new Button("<");
     private Button btnNext = new Button(">");
@@ -31,12 +35,12 @@ public class ControlsLayout extends HorizontalLayout {
         itemsPerPageSelect.addItem("50");
         itemsPerPageSelect.setImmediate(true);
         itemsPerPageSelect.setNullSelectionAllowed(false);
-        itemsPerPageSelect.setWidth("50px");
+        itemsPerPageSelect.setWidth("100px");
         itemsPerPageSelect.addValueChangeListener(new Property.ValueChangeListener() {
             private static final long serialVersionUID = -2255853716069800092L;
 
             public void valueChange(
-                    com.vaadin.data.Property.ValueChangeEvent event) {
+                    com.vaadin.v7.data.Property.ValueChangeEvent event) {
                 table.setPageLength(Integer.valueOf(String.valueOf(event
                         .getProperty().getValue())));
             }
@@ -52,21 +56,21 @@ public class ControlsLayout extends HorizontalLayout {
         currentPageTextField.setStyleName(Reindeer.TEXTFIELD_SMALL);
         currentPageTextField.setImmediate(true);
         currentPageTextField.addValueChangeListener(new Property.ValueChangeListener() {
-            private static final long serialVersionUID = -2255853716069800092L;
+                                                        private static final long serialVersionUID = -2255853716069800092L;
 
-            public void valueChange(
-                    com.vaadin.data.Property.ValueChangeEvent event) {
-                if (currentPageTextField.isValid()
-                        && currentPageTextField.getValue() != null) {
-                    int page = Integer.valueOf(String
-                            .valueOf(currentPageTextField.getValue()));
-                    table.setCurrentPage(page);
-                }
-            }
-        }
+                                                        public void valueChange(
+                                                                com.vaadin.v7.data.Property.ValueChangeEvent event) {
+                                                            if (currentPageTextField.isValid()
+                                                                    && currentPageTextField.getValue() != null) {
+                                                                int page = Integer.valueOf(String
+                                                                        .valueOf(currentPageTextField.getValue()));
+                                                                table.setCurrentPage(page);
+                                                            }
+                                                        }
+                                                    }
         );
         pageLabel.setWidth(null);
-        currentPageTextField.setWidth("20px");
+        currentPageTextField.setWidth("50px");
         separatorLabel.setWidth(null);
         totalPagesLabel.setWidth(null);
 
@@ -166,9 +170,9 @@ public class ControlsLayout extends HorizontalLayout {
         setExpandRatio(pageSize, 1);
 
         table.addListener(new PagedTable.PageChangeListener() {
-                private static final long serialVersionUID = -5737029909567376656L;
+            private static final long serialVersionUID = -5737029909567376656L;
 
-                public void pageChanged(PagedTable.PagedTableChangeEvent event) {
+            public void pageChanged(PagedTable.PagedTableChangeEvent event) {
                 PagedTableContainer containerDataSource = (PagedTableContainer) table.getContainerDataSource();
                 int startIndex = containerDataSource.getStartIndex();
                 btnFirst.setEnabled(startIndex > 0);

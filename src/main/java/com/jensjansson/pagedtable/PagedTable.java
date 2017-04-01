@@ -1,43 +1,16 @@
 package com.jensjansson.pagedtable;
 
+import com.vaadin.v7.data.Container;
+import com.vaadin.v7.ui.Table;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.vaadin.data.Container;
-import com.vaadin.ui.Table;
-
 public class PagedTable extends Table {
-        private static final long serialVersionUID = 4567719676344232576L;
-
-        public interface PageChangeListener extends Serializable {
-        public void pageChanged(PagedTableChangeEvent event);
-    }
-
-    public static class PagedTableChangeEvent {
-
-        final PagedTable table;
-
-        public PagedTableChangeEvent(PagedTable table) {
-            this.table = table;
-        }
-
-        public PagedTable getTable() {
-            return table;
-        }
-
-        public int getCurrentPage() {
-            return table.getCurrentPage();
-        }
-
-        public int getTotalAmountOfPages() {
-            return table.getTotalAmountOfPages();
-        }
-    }
-
+    private static final long serialVersionUID = 4567719676344232576L;
     private List<PageChangeListener> listeners = null;
-
     private PagedTableContainer container;
 
     public PagedTable() {
@@ -66,7 +39,7 @@ public class PagedTable extends Table {
 
     @Override
     public void setContainerDataSource(Container newDataSource,
-            Collection<?> visibleIds) {
+                                       Collection<?> visibleIds) {
         if (!(newDataSource instanceof Container.Indexed)) {
             throw new IllegalArgumentException(
                     "PagedTable can only use containers that implement Container.Indexed");
@@ -204,6 +177,31 @@ public class PagedTable extends Table {
     public void setAlwaysRecalculateColumnWidths(
             boolean alwaysRecalculateColumnWidths) {
         this.alwaysRecalculateColumnWidths = alwaysRecalculateColumnWidths;
+    }
+
+    public interface PageChangeListener extends Serializable {
+        public void pageChanged(PagedTableChangeEvent event);
+    }
+
+    public static class PagedTableChangeEvent {
+
+        final PagedTable table;
+
+        public PagedTableChangeEvent(PagedTable table) {
+            this.table = table;
+        }
+
+        public PagedTable getTable() {
+            return table;
+        }
+
+        public int getCurrentPage() {
+            return table.getCurrentPage();
+        }
+
+        public int getTotalAmountOfPages() {
+            return table.getTotalAmountOfPages();
+        }
     }
 
 }
