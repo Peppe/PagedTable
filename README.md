@@ -1,3 +1,6 @@
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/pagedtable)
+[![Stars on Vaadin Directory](https://img.shields.io/vaadin-directory/star/pagedtable.svg)](https://vaadin.com/directory/component/pagedtable)
+
 # Paged Table
 
 This is the Vaadin 8 PagedTable in compatibility mode, for migrating from Vaadin 7 to Vaadin 8 projects. When you have migrated, I suggest you switch from Table to Grid.  [GridExtensionPack Add-on](https://vaadin.com/directory#!addon/gridextensionpack-add-on) provides a Paged Container and that does similar things to Grid as this addon does to Table.
